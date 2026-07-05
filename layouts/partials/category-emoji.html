@@ -1,0 +1,10 @@
+{{- $emojis := dict
+  "Plat principal" "🍽️"
+  "Dessert" "🍰"
+  "Entrée" "🥗"
+  "Accompagnement" "🥔"
+  "Apéritif" "🥨"
+  "Cocktail" "🍹"
+  "Sauce" "🥄"
+-}}
+{{- index $emojis . | default "🍳" -}}

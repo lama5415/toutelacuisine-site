@@ -1,0 +1,33 @@
+{{ define "main" }}
+<article class="container recipe-page">
+  <header class="recipe-header">
+    <nav class="breadcrumb">
+      <a href="/recettes/">Recettes</a>
+      {{ with index .Params.categories 0 }} › <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}
+    </nav>
+    <h1>{{ .Title }}</h1>
+    <p class="recipe-byline">
+      {{ if .Params.author_link }}
+      Par <a href="{{ .Params.author_link }}">{{ .Params.author }}</a>
+      {{ else if .Params.author }}
+      Par {{ .Params.author }}
+      {{ end }}
+      · {{ .Date | time.Format ":date_long" }}
+    </p>
+    {{ partial "recipe-badges.html" . }}
+  </header>
+
+  <div class="recipe-content">
+    {{ with .Params.image }}
+    <figure><img src="{{ . }}" alt="{{ $.Title }}"></figure>
+    {{ end }}
+    {{ .Content }}
+  </div>
+
+  {{ with .Params.tags }}
+  <div class="recipe-tags">
+    {{ range . }}<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="chip">#{{ . }}</a>{{ end }}
+  </div>
+  {{ end }}
+</article>
+{{ end }}

@@ -1,0 +1,205 @@
+# Configuration Decap CMS — dépôt de recettes
+#
+# backend.repo : à adapter une fois le repo GitHub créé (repo PRIVÉ,
+#   les contributeurs sont invités comme collaborateurs).
+# L'authentification OAuth est assurée par Netlify (aucun base_url à définir :
+#   Decap utilise le service OAuth de Netlify par défaut). Configurer la GitHub
+#   OAuth App dans Netlify : Site settings → Access & security → OAuth.
+# editorial_workflow : chaque recette déposée arrive en « Brouillon » (PR),
+#   le propriétaire la passe en « Prête » puis la publie (merge).
+
+backend:
+  name: github
+  repo: lmagnien/toutelacuisine-site
+  branch: main
+
+publish_mode: editorial_workflow
+
+# Pour tester en local : lancer `npx decap-server` puis `hugo server`
+local_backend: true
+
+media_folder: static/images/recettes
+public_folder: /images/recettes
+
+collections:
+  - name: "plat-principal"
+    label: "Plats principaux"
+    folder: "content/recettes/plat-principal"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Votre nom", name: "author", widget: "string" }
+      - { label: "Photo du plat", name: "image", widget: "image", required: false }
+      - { label: "Catégorie", name: "categories", widget: "hidden", default: ["Plat principal"] }
+      - { label: "Difficulté", name: "difficulty", widget: "select", options: ["Facile", "Moyen", "Difficile"], default: "Facile" }
+      - { label: "Coût", name: "cost", widget: "select", options: ["Bon Marché", "Moyen", "Cher"], default: "Bon Marché" }
+      - { label: "Temps de préparation", name: "prep_time", widget: "string", required: false, hint: "ex : 20 minutes" }
+      - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
+      - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - label: "Recette"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## Ingrédients
+
+          -
+
+          ## Préparation
+
+  - name: "dessert"
+    label: "Desserts"
+    folder: "content/recettes/dessert"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Votre nom", name: "author", widget: "string" }
+      - { label: "Photo du plat", name: "image", widget: "image", required: false }
+      - { label: "Catégorie", name: "categories", widget: "hidden", default: ["Dessert"] }
+      - { label: "Difficulté", name: "difficulty", widget: "select", options: ["Facile", "Moyen", "Difficile"], default: "Facile" }
+      - { label: "Coût", name: "cost", widget: "select", options: ["Bon Marché", "Moyen", "Cher"], default: "Bon Marché" }
+      - { label: "Temps de préparation", name: "prep_time", widget: "string", required: false, hint: "ex : 20 minutes" }
+      - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
+      - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - label: "Recette"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## Ingrédients
+
+          -
+
+          ## Préparation
+
+  - name: "entree"
+    label: "Entrées"
+    folder: "content/recettes/entree"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Votre nom", name: "author", widget: "string" }
+      - { label: "Photo du plat", name: "image", widget: "image", required: false }
+      - { label: "Catégorie", name: "categories", widget: "hidden", default: ["Entrée"] }
+      - { label: "Difficulté", name: "difficulty", widget: "select", options: ["Facile", "Moyen", "Difficile"], default: "Facile" }
+      - { label: "Coût", name: "cost", widget: "select", options: ["Bon Marché", "Moyen", "Cher"], default: "Bon Marché" }
+      - { label: "Temps de préparation", name: "prep_time", widget: "string", required: false, hint: "ex : 20 minutes" }
+      - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
+      - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - label: "Recette"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## Ingrédients
+
+          -
+
+          ## Préparation
+
+  - name: "accompagnement"
+    label: "Accompagnements"
+    folder: "content/recettes/accompagnement"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Votre nom", name: "author", widget: "string" }
+      - { label: "Photo du plat", name: "image", widget: "image", required: false }
+      - { label: "Catégorie", name: "categories", widget: "hidden", default: ["Accompagnement"] }
+      - { label: "Difficulté", name: "difficulty", widget: "select", options: ["Facile", "Moyen", "Difficile"], default: "Facile" }
+      - { label: "Coût", name: "cost", widget: "select", options: ["Bon Marché", "Moyen", "Cher"], default: "Bon Marché" }
+      - { label: "Temps de préparation", name: "prep_time", widget: "string", required: false, hint: "ex : 20 minutes" }
+      - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
+      - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - label: "Recette"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## Ingrédients
+
+          -
+
+          ## Préparation
+
+  - name: "aperitif"
+    label: "Apéritifs"
+    folder: "content/recettes/aperitif"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Votre nom", name: "author", widget: "string" }
+      - { label: "Photo du plat", name: "image", widget: "image", required: false }
+      - { label: "Catégorie", name: "categories", widget: "hidden", default: ["Apéritif"] }
+      - { label: "Difficulté", name: "difficulty", widget: "select", options: ["Facile", "Moyen", "Difficile"], default: "Facile" }
+      - { label: "Coût", name: "cost", widget: "select", options: ["Bon Marché", "Moyen", "Cher"], default: "Bon Marché" }
+      - { label: "Temps de préparation", name: "prep_time", widget: "string", required: false, hint: "ex : 20 minutes" }
+      - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
+      - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - label: "Recette"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## Ingrédients
+
+          -
+
+          ## Préparation
+
+  - name: "cocktail"
+    label: "Cocktails"
+    folder: "content/recettes/cocktail"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Votre nom", name: "author", widget: "string" }
+      - { label: "Photo du plat", name: "image", widget: "image", required: false }
+      - { label: "Catégorie", name: "categories", widget: "hidden", default: ["Cocktail"] }
+      - { label: "Difficulté", name: "difficulty", widget: "select", options: ["Facile", "Moyen", "Difficile"], default: "Facile" }
+      - { label: "Coût", name: "cost", widget: "select", options: ["Bon Marché", "Moyen", "Cher"], default: "Bon Marché" }
+      - { label: "Temps de préparation", name: "prep_time", widget: "string", required: false, hint: "ex : 20 minutes" }
+      - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
+      - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - label: "Recette"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## Ingrédients
+
+          -
+
+          ## Préparation
+
+  - name: "sauce"
+    label: "Sauces"
+    folder: "content/recettes/sauce"
+    create: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Votre nom", name: "author", widget: "string" }
+      - { label: "Photo du plat", name: "image", widget: "image", required: false }
+      - { label: "Catégorie", name: "categories", widget: "hidden", default: ["Sauce"] }
+      - { label: "Difficulté", name: "difficulty", widget: "select", options: ["Facile", "Moyen", "Difficile"], default: "Facile" }
+      - { label: "Coût", name: "cost", widget: "select", options: ["Bon Marché", "Moyen", "Cher"], default: "Bon Marché" }
+      - { label: "Temps de préparation", name: "prep_time", widget: "string", required: false, hint: "ex : 20 minutes" }
+      - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
+      - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      - label: "Recette"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## Ingrédients
+
+          -
+
+          ## Préparation

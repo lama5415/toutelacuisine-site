@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div class="container section user-page">
+  <header class="user-header">
+    {{ if .Params.avatar_thumb }}
+    <img class="user-avatar user-avatar-lg" src="{{ .Params.avatar_thumb }}" alt="{{ .Title }}">
+    {{ else }}
+    <span class="user-avatar user-avatar-lg user-initial">{{ substr .Title 0 1 | upper }}</span>
+    {{ end }}
+    <div>
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.location }}<p class="user-location">📍 {{ . }}</p>{{ end }}
+    </div>
+  </header>
+
+  {{ with .Content }}
+  <div class="user-bio">{{ . }}</div>
+  {{ end }}
+
+  {{ $recipes := where site.RegularPages "Params.author" .Title }}
+  {{ if $recipes }}
+  <h2 class="section-title">Ses recettes ({{ len $recipes }})</h2>
+  <div class="recipe-grid">
+    {{ range $recipes.ByDate.Reverse }}
+    {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+  {{ else }}
+  <p class="page-intro">Ce membre n'a pas encore publié de recette.</p>
+  {{ end }}
+</div>
+{{ end }}

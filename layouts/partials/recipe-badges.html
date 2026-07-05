@@ -1,0 +1,8 @@
+<div class="recipe-badges">
+  {{ with .Params.difficulty }}<span class="badge badge-difficulty">📊 {{ . }}</span>{{ end }}
+  {{ with .Params.cost }}<span class="badge badge-cost">💰 {{ . }}</span>{{ end }}
+  {{ with .Params.prep_time }}<span class="badge">⏱️ Préparation : {{ . }}</span>{{ end }}
+  {{ with .Params.cook_time }}<span class="badge">🔥 Cuisson : {{ . }}</span>{{ end }}
+  {{ with .Params.serves }}<span class="badge">🍽️ {{ . }}</span>{{ end }}
+  {{ if gt (.Params.votes | default 0) 0 }}<span class="badge badge-votes">👍 {{ .Params.votes }}</span>{{ end }}
+</div>

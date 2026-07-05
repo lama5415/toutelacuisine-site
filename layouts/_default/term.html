@@ -1,0 +1,11 @@
+{{ define "main" }}
+<div class="container section">
+  <h1 class="page-title">{{ if eq .Data.Plural "categories" }}{{ partial "category-emoji.html" .Title }} {{ end }}{{ .Title }}</h1>
+  <p class="page-intro">{{ len .Pages }} recette{{ if gt (len .Pages) 1 }}s{{ end }}</p>
+  <div class="recipe-grid">
+    {{ range .Pages.ByDate.Reverse }}
+    {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+</div>
+{{ end }}

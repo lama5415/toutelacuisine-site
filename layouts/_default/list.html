@@ -1,0 +1,11 @@
+{{ define "main" }}
+<div class="container section">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{ .Content }}
+  <div class="recipe-grid">
+    {{ range .RegularPagesRecursive.ByDate.Reverse }}
+    {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+</div>
+{{ end }}

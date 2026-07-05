@@ -1,0 +1,27 @@
+{{ define "main" }}
+<div class="container section">
+  <h1 class="page-title">{{ .Title }}</h1>
+
+  <nav class="category-filter">
+    <a href="/recettes/" class="chip{{ if eq .RelPermalink "/recettes/" }} chip-active{{ end }}">Toutes</a>
+    {{ range site.Taxonomies.categories.Alphabetical }}
+    <a href="{{ .Page.RelPermalink }}" class="chip">{{ .Page.Title }}</a>
+    {{ end }}
+  </nav>
+
+  {{ $paginator := .Paginate .RegularPagesRecursive.ByDate.Reverse }}
+  <div class="recipe-grid">
+    {{ range $paginator.Pages }}
+    {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+
+  {{ if gt $paginator.TotalPages 1 }}
+  <nav class="pagination">
+    {{ if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}" class="chip">← Précédent</a>{{ end }}
+    <span class="page-info">Page {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
+    {{ if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}" class="chip">Suivant →</a>{{ end }}
+  </nav>
+  {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,9 @@
+<footer class="site-footer">
+  <div class="container">
+    <p><strong>{{ site.Title }}</strong> — {{ site.Params.description }}</p>
+    <p class="footer-links">
+      {{ range site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}
+    </p>
+    <p class="footer-note">Recettes partagées par la communauté depuis 2008 · {{ now.Year }}</p>
+  </div>
+</footer>

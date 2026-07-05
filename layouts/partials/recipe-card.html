@@ -1,0 +1,24 @@
+<article class="recipe-card">
+  <a href="{{ .RelPermalink }}" class="card-link">
+    <div class="card-image">
+      {{ if .Params.image }}
+      <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+      {{ else if .Params.image_thumb }}
+      <img src="/images/recettes/thumbs/{{ .Params.image_thumb }}" alt="{{ .Title }}" loading="lazy">
+      {{ else if .Params.image_original }}
+      <img src="/images/recettes/{{ .Params.image_original }}" alt="{{ .Title }}" loading="lazy">
+      {{ else }}
+      <div class="card-placeholder" aria-hidden="true">{{ partial "category-emoji.html" (index .Params.categories 0 | default "") }}</div>
+      {{ end }}
+      {{ with index .Params.categories 0 }}<span class="card-category">{{ . }}</span>{{ end }}
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">{{ .Title }}</h3>
+      <div class="card-meta">
+        {{ with .Params.author }}<span class="card-author">👤 {{ . }}</span>{{ end }}
+        {{ with .Params.prep_time }}<span>⏱️ {{ . }}</span>{{ end }}
+        {{ with .Params.difficulty }}<span>{{ . }}</span>{{ end }}
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,39 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="container">
+    <h1>Des recettes de cuisine <span>faites maison</span></h1>
+    <p>{{ site.Params.description }}</p>
+    <a href="/recettes/" class="btn btn-primary">Voir toutes les recettes</a>
+  </div>
+</section>
+
+<section class="container section">
+  <h2 class="section-title">Dernières recettes</h2>
+  <div class="recipe-grid">
+    {{ range first 12 (where site.RegularPages "Section" "recettes").ByDate.Reverse }}
+    {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+</section>
+
+<section class="container section">
+  <h2 class="section-title">Catégories</h2>
+  <div class="category-grid">
+    {{ range site.Taxonomies.categories.ByCount }}
+    <a href="{{ .Page.RelPermalink }}" class="category-tile">
+      <span class="category-emoji">{{ partial "category-emoji.html" .Page.Title }}</span>
+      <span class="category-name">{{ .Page.Title }}</span>
+      <span class="category-count">{{ .Count }} recette{{ if gt .Count 1 }}s{{ end }}</span>
+    </a>
+    {{ end }}
+  </div>
+</section>
+
+<section class="container section stats-band">
+  {{ $recipes := where site.RegularPages "Section" "recettes" }}
+  {{ $users := where site.RegularPages "Section" "users" }}
+  <div class="stat"><strong>{{ len $recipes }}</strong> recettes</div>
+  <div class="stat"><strong>{{ len $users }}</strong> cuisiniers</div>
+  <div class="stat"><strong>{{ len site.Taxonomies.categories }}</strong> catégories</div>
+</section>
+{{ end }}

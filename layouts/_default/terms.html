@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="container section">
+  <h1 class="page-title">{{ .Title }}</h1>
+  <div class="category-grid">
+    {{ range .Data.Terms.ByCount }}
+    <a href="{{ .Page.RelPermalink }}" class="category-tile">
+      {{ if eq $.Data.Plural "categories" }}<span class="category-emoji">{{ partial "category-emoji.html" .Page.Title }}</span>{{ end }}
+      <span class="category-name">{{ .Page.Title }}</span>
+      <span class="category-count">{{ .Count }} recette{{ if gt .Count 1 }}s{{ end }}</span>
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

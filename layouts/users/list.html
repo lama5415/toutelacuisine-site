@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div class="container section">
+  <h1 class="page-title">{{ .Title }}</h1>
+  <p class="page-intro">Les cuisiniers et cuisinières qui ont partagé leurs recettes.</p>
+  <div class="user-grid">
+    {{ range .RegularPages.ByTitle }}
+    {{ $count := len (where site.RegularPages "Params.author" .Title) }}
+    <a href="{{ .RelPermalink }}" class="user-card">
+      {{ if .Params.avatar_thumb }}
+      <img class="user-avatar" src="{{ .Params.avatar_thumb }}" alt="{{ .Title }}" loading="lazy">
+      {{ else }}
+      <span class="user-avatar user-initial">{{ substr .Title 0 1 | upper }}</span>
+      {{ end }}
+      <span class="user-name">{{ .Title }}</span>
+      <span class="user-count">{{ if gt $count 0 }}{{ $count }} recette{{ if gt $count 1 }}s{{ end }}{{ else }}membre{{ end }}</span>
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
