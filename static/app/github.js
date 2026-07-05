@@ -166,5 +166,5 @@ export async function publishRecipe(state, onProgress) {
     }
   }
 
-  return { slug, url: `https://toutelacuisine.com/recettes/${state.category}/${slug}/` };
+  return { slug, url: `${location.origin}/recettes/${state.category}/${slug}/` };
 }

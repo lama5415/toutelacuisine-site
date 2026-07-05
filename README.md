@@ -6,7 +6,7 @@ Site de recettes de cuisine communautaire (depuis 2008), reconstruit en site sta
 - **Contenu** : 138 recettes et 71 profils migrés depuis l'ancien site Pligg CMS
   (script `migrate_from_mysql.py` dans le repo d'archive)
 - **Dépôt de recettes** : [Decap CMS](https://decapcms.org/) sur `/admin/`, connexion GitHub
-  (contributeurs invités sur le repo privé), modération par le propriétaire (workflow éditorial)
+  (contributeurs invités comme collaborateurs du repo), modération par le propriétaire (workflow éditorial)
 - **Saisie mobile** : PWA maison sur `/app/` (installable sur téléphone), publication
   directe sur `main` via l'API GitHub — voir [DEPLOY.md §7](DEPLOY.md)
 - **Hébergement** : Netlify (offre gratuite), build automatique à chaque push — voir [DEPLOY.md](DEPLOY.md)

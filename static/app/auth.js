@@ -1,8 +1,12 @@
 // Authentification GitHub via le broker OAuth de Netlify — même mécanisme que
-// Decap. site_id en dur : l'auth fonctionne aussi depuis localhost.
+// Decap : le site_id est le nom d'hôte courant (netlify.app ou domaine custom,
+// tous deux connus du broker). Depuis localhost, on retombe sur le sous-domaine
+// Netlify pour que l'auth fonctionne aussi en développement.
 
 const NETLIFY_ORIGIN = "https://api.netlify.com";
-const SITE_ID = "toutelacuisine.com";
+const SITE_ID = ["localhost", "127.0.0.1"].includes(location.hostname)
+  ? "toutelacuisine.netlify.app"
+  : location.hostname;
 const TOKEN_KEY = "tlc_gh_token";
 
 export const REPO = "lama5415/toutelacuisine-site";
@@ -19,7 +23,7 @@ export function clearToken() {
 export function login() {
   return new Promise((resolve, reject) => {
     const popup = window.open(
-      `${NETLIFY_ORIGIN}/auth?provider=github&scope=repo&site_id=${SITE_ID}`,
+      `${NETLIFY_ORIGIN}/auth?provider=github&scope=public_repo&site_id=${SITE_ID}`,
       "tlc-auth",
       "width=600,height=700"
     );

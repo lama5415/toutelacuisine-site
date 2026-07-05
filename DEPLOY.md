@@ -1,12 +1,16 @@
-# Déploiement — toutelacuisine.com (Netlify + repo GitHub privé)
+# Déploiement — toutelacuisine.com (Netlify + repo GitHub)
 
 Architecture : site statique Hugo + Decap CMS, hébergé gratuitement sur Netlify.
-Pas de base de données, pas de serveur : le contenu vit dans le repo git (privé),
+Pas de base de données, pas de serveur : le contenu vit dans le repo git,
 Netlify construit et sert le site, et fait office de service OAuth pour le CMS.
 
-## 1. Repo GitHub (privé)
+## 1. Repo GitHub (public)
 
-1. Créer le repo **privé** `toutelacuisine-site` sur GitHub et pousser ce dossier.
+1. Créer le repo **public** `toutelacuisine-site` sur GitHub et pousser ce dossier.
+   Public obligatoire : le plan gratuit Netlify n'accepte qu'un seul « Git
+   contributor » sur les repos privés et bloque les builds dès qu'un autre compte
+   pousse (contributeur Decap, second compte du propriétaire…). En public,
+   contributeurs illimités ; l'écriture reste réservée aux collaborateurs invités.
 2. Vérifier `static/admin/config.yml` → `backend.repo: <owner>/toutelacuisine-site`.
 3. Inviter les contributeurs : repo → Settings → Collaborators → Add people
    (rôle **Write**). Chacun doit avoir un compte GitHub (gratuit) et accepter
@@ -89,5 +93,7 @@ via l'API GitHub (pas de workflow éditorial), qui déclenche le rebuild Netlify
   (remettre `"main"` ensuite).
 - **Icônes** : régénérées par `python3 scripts/make_icons.py` (nécessite Pillow).
 - **En local** : `hugo server` sert `/app/` ; le login OAuth fonctionne depuis
-  `localhost` (le `site_id` est codé en dur dans `static/app/auth.js`). Le
-  service worker et l'installation ne se testent qu'en HTTPS sur le site déployé.
+  `localhost` (`static/app/auth.js` utilise alors `toutelacuisine.netlify.app`
+  comme `site_id` ; sinon c'est le nom d'hôte courant, qui marche sur le
+  sous-domaine Netlify comme sur le domaine final). Le service worker et
+  l'installation ne se testent qu'en HTTPS sur le site déployé.

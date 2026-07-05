@@ -1,7 +1,8 @@
 # Configuration Decap CMS — dépôt de recettes
 #
-# backend.repo : à adapter une fois le repo GitHub créé (repo PRIVÉ,
-#   les contributeurs sont invités comme collaborateurs).
+# backend.repo : repo PUBLIC (exigence du plan gratuit Netlify pour builder les
+#   commits de plusieurs contributeurs) ; les contributeurs sont invités comme
+#   collaborateurs (rôle Write) pour avoir le droit d'écrire.
 # L'authentification OAuth est assurée par Netlify (aucun base_url à définir :
 #   Decap utilise le service OAuth de Netlify par défaut). Configurer la GitHub
 #   OAuth App dans Netlify : Site settings → Access & security → OAuth.

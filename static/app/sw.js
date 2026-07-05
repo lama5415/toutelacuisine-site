@@ -1,7 +1,7 @@
 // Service worker : cache du shell de l'appli uniquement (cache-first sur /app/).
 // Incrémenter CACHE à chaque modification des fichiers de l'appli.
 
-const CACHE = "tlc-app-v1";
+const CACHE = "tlc-app-v2";
 const SHELL = [
   "/app/",
   "/app/app.css",
