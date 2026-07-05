@@ -10,7 +10,7 @@
 
 backend:
   name: github
-  repo: lmagnien/toutelacuisine-site
+  repo: lama5415/toutelacuisine-site
   branch: main
 
 publish_mode: editorial_workflow
