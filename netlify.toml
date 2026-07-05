@@ -11,6 +11,13 @@
   [headers.values]
     Cache-Control = "no-cache"
 
+# La PWA de saisie gère son propre cache (service worker) : no-cache côté CDN
+# pour que sw.js et le shell se mettent à jour dès le déploiement
+[[headers]]
+  for = "/app/*"
+  [headers.values]
+    Cache-Control = "no-cache"
+
 [[headers]]
   for = "/images/*"
   [headers.values]

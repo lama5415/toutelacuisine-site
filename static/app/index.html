@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#ef1864">
+  <title>Nouvelle recette — TouteLaCuisine</title>
+  <link rel="manifest" href="/app/manifest.webmanifest">
+  <link rel="icon" href="/app/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/app/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="/app/app.css">
+</head>
+<body>
+
+  <!-- Écran de connexion -->
+  <div id="login-screen" class="login-screen" hidden>
+    <h1>Toute<span>La</span>Cuisine</h1>
+    <p>Saisie de recettes réservée aux contributeurs du site.</p>
+    <button id="login-btn" class="btn btn-primary btn-big">Se connecter avec GitHub</button>
+    <p id="login-error" class="error" hidden></p>
+  </div>
+
+  <div id="app" hidden>
+    <header class="app-header">
+      <div class="app-title">Nouvelle <span>recette</span></div>
+      <div class="user-chip" id="user-chip" hidden></div>
+    </header>
+
+    <!-- Bannière de reprise de brouillon -->
+    <div id="draft-banner" class="draft-banner" hidden>
+      <p>Un brouillon de recette est en cours. Le reprendre ?</p>
+      <div class="draft-banner-actions">
+        <button id="draft-resume" class="btn btn-primary">Reprendre</button>
+        <button id="draft-discard" class="btn btn-ghost">Recommencer</button>
+      </div>
+    </div>
+
+    <nav class="stepper" id="stepper">
+      <button data-goto="0" class="step-dot active" aria-label="Infos">1</button>
+      <button data-goto="1" class="step-dot" aria-label="Photo">2</button>
+      <button data-goto="2" class="step-dot" aria-label="Ingrédients">3</button>
+      <button data-goto="3" class="step-dot" aria-label="Étapes">4</button>
+      <button data-goto="4" class="step-dot" aria-label="Publier">5</button>
+    </nav>
+
+    <main id="main">
+
+      <!-- Étape 1 : infos générales -->
+      <section class="step" data-step="0">
+        <h2>La recette</h2>
+        <label class="field">
+          <span>Titre *</span>
+          <input type="text" id="f-title" autocomplete="off" placeholder="ex : Tarte aux pommes de mamie">
+        </label>
+        <p class="slug-preview" id="slug-preview" hidden></p>
+        <label class="field">
+          <span>Catégorie *</span>
+          <select id="f-category">
+            <option value="">— Choisir —</option>
+            <option value="plat-principal">Plat principal</option>
+            <option value="dessert">Dessert</option>
+            <option value="entree">Entrée</option>
+            <option value="accompagnement">Accompagnement</option>
+            <option value="aperitif">Apéritif</option>
+            <option value="cocktail">Cocktail</option>
+            <option value="sauce">Sauce</option>
+          </select>
+        </label>
+        <div class="field">
+          <span>Difficulté</span>
+          <div class="segmented" id="f-difficulty">
+            <button data-value="Facile" class="active">Facile</button>
+            <button data-value="Moyen">Moyen</button>
+            <button data-value="Difficile">Difficile</button>
+          </div>
+        </div>
+        <div class="field">
+          <span>Coût</span>
+          <div class="segmented" id="f-cost">
+            <button data-value="Bon Marché" class="active">Bon Marché</button>
+            <button data-value="Moyen">Moyen</button>
+            <button data-value="Cher">Cher</button>
+          </div>
+        </div>
+        <div class="field-row">
+          <label class="field">
+            <span>⏱️ Préparation</span>
+            <input type="text" id="f-prep" placeholder="20 minutes">
+          </label>
+          <label class="field">
+            <span>🔥 Cuisson</span>
+            <input type="text" id="f-cook" placeholder="45 minutes">
+          </label>
+        </div>
+        <label class="field">
+          <span>🍽️ Nombre de personnes</span>
+          <input type="text" id="f-serves" placeholder="4 personnes">
+        </label>
+        <div class="field">
+          <span>Tags</span>
+          <div class="chips" id="tags-list"></div>
+          <div class="add-row">
+            <input type="text" id="f-tag" placeholder="ex : chocolat" autocomplete="off" enterkeyhint="done">
+            <button id="tag-add" class="btn btn-secondary">Ajouter</button>
+          </div>
+        </div>
+        <label class="field">
+          <span>Votre nom</span>
+          <input type="text" id="f-author" autocomplete="off">
+        </label>
+      </section>
+
+      <!-- Étape 2 : photo principale -->
+      <section class="step" data-step="1" hidden>
+        <h2>Photo du plat</h2>
+        <div id="main-photo-zone" class="photo-zone">
+          <input type="file" id="f-main-photo" accept="image/*" hidden>
+          <button id="main-photo-btn" class="photo-placeholder">
+            📷<br>Ajouter une photo
+          </button>
+          <div id="main-photo-preview" class="photo-preview" hidden>
+            <img alt="Photo principale">
+            <button class="photo-remove" aria-label="Supprimer la photo">✕</button>
+          </div>
+        </div>
+        <p class="hint">La photo est réduite et compressée automatiquement.</p>
+      </section>
+
+      <!-- Étape 3 : ingrédients -->
+      <section class="step" data-step="2" hidden>
+        <h2>Ingrédients *</h2>
+        <ul class="item-list" id="ingredients-list"></ul>
+        <div class="add-row">
+          <input type="text" id="f-ingredient" placeholder="ex : 250 g de farine" autocomplete="off" enterkeyhint="done">
+          <button id="ingredient-add" class="btn btn-secondary">Ajouter</button>
+        </div>
+        <p class="hint">Entrée ajoute l'ingrédient et permet d'enchaîner.</p>
+      </section>
+
+      <!-- Étape 4 : étapes de préparation -->
+      <section class="step" data-step="3" hidden>
+        <h2>Préparation *</h2>
+        <ol class="steps-list" id="steps-list"></ol>
+        <button id="step-add" class="btn btn-secondary btn-block">+ Ajouter une étape</button>
+      </section>
+
+      <!-- Étape 5 : options + publication -->
+      <section class="step" data-step="4" hidden>
+        <h2>Pour finir</h2>
+        <div class="field">
+          <span>💡 Astuces <em>(optionnel)</em></span>
+          <ul class="item-list" id="tips-list"></ul>
+          <div class="add-row">
+            <input type="text" id="f-tip" placeholder="ex : servir tiède avec une glace vanille" autocomplete="off" enterkeyhint="done">
+            <button id="tip-add" class="btn btn-secondary">Ajouter</button>
+          </div>
+        </div>
+        <label class="field">
+          <span>🍷 Accord mets-vin <em>(optionnel)</em></span>
+          <input type="text" id="f-wine" placeholder="ex : un Chinon léger" autocomplete="off">
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="f-draft">
+          <span>Enregistrer comme brouillon (non visible sur le site)</span>
+        </label>
+        <div class="summary" id="summary"></div>
+        <p id="publish-error" class="error" hidden></p>
+        <button id="publish-btn" class="btn btn-primary btn-big btn-block">Publier la recette</button>
+      </section>
+
+      <!-- Écran de publication en cours / succès -->
+      <section class="step" data-step="progress" hidden>
+        <div id="progress-box" class="progress-box">
+          <div class="spinner" id="progress-spinner"></div>
+          <p id="progress-text">Préparation…</p>
+        </div>
+        <div id="success-box" class="success-box" hidden>
+          <p class="success-emoji">🎉</p>
+          <h2>Recette publiée !</h2>
+          <p id="success-text"></p>
+          <p><a id="success-link" href="#" target="_blank" rel="noopener"></a></p>
+          <button id="new-recipe-btn" class="btn btn-primary btn-big btn-block">Nouvelle recette</button>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="nav-bar" id="nav-bar">
+      <button id="nav-prev" class="btn btn-ghost">‹ Précédent</button>
+      <button id="nav-next" class="btn btn-primary">Suivant ›</button>
+    </footer>
+  </div>
+
+  <!-- Modèles clonés par app.js -->
+  <template id="tpl-item-row">
+    <li class="item-row">
+      <span class="item-text"></span>
+      <span class="item-actions">
+        <button class="row-up" aria-label="Monter">↑</button>
+        <button class="row-down" aria-label="Descendre">↓</button>
+        <button class="row-del" aria-label="Supprimer">✕</button>
+      </span>
+    </li>
+  </template>
+
+  <template id="tpl-step-card">
+    <li class="step-card">
+      <div class="step-card-head">
+        <span class="step-num"></span>
+        <span class="item-actions">
+          <button class="row-up" aria-label="Monter">↑</button>
+          <button class="row-down" aria-label="Descendre">↓</button>
+          <button class="row-del" aria-label="Supprimer">✕</button>
+        </span>
+      </div>
+      <textarea rows="2" placeholder="Décrivez cette étape…"></textarea>
+      <div class="step-photos"></div>
+      <label class="btn btn-secondary btn-small step-photo-add">
+        + photo
+        <input type="file" accept="image/*" hidden>
+      </label>
+    </li>
+  </template>
+
+  <template id="tpl-step-thumb">
+    <span class="step-thumb">
+      <img alt="">
+      <button class="thumb-del" aria-label="Supprimer la photo">✕</button>
+    </span>
+  </template>
+
+  <script type="module" src="/app/app.js"></script>
+</body>
+</html>
