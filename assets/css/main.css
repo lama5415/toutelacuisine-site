@@ -349,6 +349,49 @@ a:hover { text-decoration: underline; }
 
 .recipe-tags { margin-top: 2rem; }
 
+/* Format structuré (PWA / Decap) */
+
+.recipe-steps ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.recipe-steps li {
+  margin-bottom: 1.25rem;
+  padding-left: 0.35rem;
+}
+.recipe-steps li::marker {
+  color: var(--rose);
+  font-weight: 700;
+}
+.recipe-steps li p { margin-bottom: 0.5rem; }
+
+.step-photo { margin: 0.5rem 0 0; }
+.step-photo img {
+  max-width: min(100%, 420px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.recipe-tips,
+.recipe-wine {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+.recipe-tips { border-left: 4px solid var(--turquoise); }
+.recipe-wine { border-left: 4px solid var(--rose); }
+.recipe-tips h2,
+.recipe-wine h2 {
+  border-left: none;
+  padding-left: 0;
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+.recipe-tips ul { margin-bottom: 0; }
+.recipe-wine p { margin-bottom: 0; }
+
 /* --------------------------------------------------------------------------
    Cuisiniers
    -------------------------------------------------------------------------- */

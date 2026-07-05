@@ -21,7 +21,51 @@
     {{ with .Params.image }}
     <figure><img src="{{ . }}" alt="{{ $.Title }}"></figure>
     {{ end }}
+
+    {{ if .Params.ingredients }}
+    {{/* Format structuré (PWA / Decap ≥ 2026) */}}
+    <section class="recipe-ingredients">
+      <h2>Ingrédients</h2>
+      <ul>
+        {{ range .Params.ingredients }}<li>{{ . }}</li>{{ end }}
+      </ul>
+    </section>
+
+    <section class="recipe-steps">
+      <h2>Préparation</h2>
+      <ol>
+        {{ range .Params.steps }}
+        <li>
+          <p>{{ .text }}</p>
+          {{ range .images }}
+          <figure class="step-photo"><img src="{{ . }}" alt="" loading="lazy"></figure>
+          {{ end }}
+        </li>
+        {{ end }}
+      </ol>
+    </section>
+
+    {{ with .Params.tips }}
+    <aside class="recipe-tips">
+      <h2>💡 Astuces</h2>
+      <ul>
+        {{ range . }}<li>{{ . }}</li>{{ end }}
+      </ul>
+    </aside>
+    {{ end }}
+
+    {{ with .Params.wine_pairing }}
+    <aside class="recipe-wine">
+      <h2>🍷 Accord mets-vin</h2>
+      <p>{{ . }}</p>
+    </aside>
+    {{ end }}
+
     {{ .Content }}
+    {{ else }}
+    {{/* Format historique : corps markdown avec ## Ingrédients / ## Préparation */}}
+    {{ .Content }}
+    {{ end }}
   </div>
 
   {{ with .Params.tags }}

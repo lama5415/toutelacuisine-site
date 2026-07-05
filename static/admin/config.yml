@@ -7,6 +7,11 @@
 #   OAuth App dans Netlify : Site settings → Access & security → OAuth.
 # editorial_workflow : chaque recette déposée arrive en « Brouillon » (PR),
 #   le propriétaire la passe en « Prête » puis la publie (merge).
+#
+# Format structuré (2026) : les champs ingredients / steps / tips / wine_pairing
+#   remplacent le corps markdown pour les nouvelles recettes. Le champ « Recette
+#   (ancien format) » reste pour éditer les recettes historiques. La PWA de
+#   saisie mobile (/app/) produit exactement le même format.
 
 backend:
   name: github
@@ -38,15 +43,31 @@ collections:
       - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
       - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
-      - label: "Recette"
-        name: "body"
-        widget: "markdown"
-        default: |
-          ## Ingrédients
-
-          -
-
-          ## Préparation
+      - label: "Ingrédients"
+        name: "ingredients"
+        widget: "list"
+        required: false
+        hint: "Un ingrédient par ligne, ex : « 250 g de farine »"
+        field: { label: "Ingrédient", name: "ingredient", widget: "string" }
+      - label: "Étapes de préparation"
+        name: "steps"
+        widget: "list"
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: "Texte", name: "text", widget: "text" }
+          - label: "Photos de l'étape"
+            name: "images"
+            widget: "list"
+            required: false
+            field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Astuces"
+        name: "tips"
+        widget: "list"
+        required: false
+        field: { label: "Astuce", name: "tip", widget: "string" }
+      - { label: "Accord mets-vin", name: "wine_pairing", widget: "string", required: false }
+      - { label: "Recette (ancien format, laisser vide si vous remplissez Ingrédients/Étapes)", name: "body", widget: "markdown", required: false }
 
   - name: "dessert"
     label: "Desserts"
@@ -64,15 +85,31 @@ collections:
       - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
       - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
-      - label: "Recette"
-        name: "body"
-        widget: "markdown"
-        default: |
-          ## Ingrédients
-
-          -
-
-          ## Préparation
+      - label: "Ingrédients"
+        name: "ingredients"
+        widget: "list"
+        required: false
+        hint: "Un ingrédient par ligne, ex : « 250 g de farine »"
+        field: { label: "Ingrédient", name: "ingredient", widget: "string" }
+      - label: "Étapes de préparation"
+        name: "steps"
+        widget: "list"
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: "Texte", name: "text", widget: "text" }
+          - label: "Photos de l'étape"
+            name: "images"
+            widget: "list"
+            required: false
+            field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Astuces"
+        name: "tips"
+        widget: "list"
+        required: false
+        field: { label: "Astuce", name: "tip", widget: "string" }
+      - { label: "Accord mets-vin", name: "wine_pairing", widget: "string", required: false }
+      - { label: "Recette (ancien format, laisser vide si vous remplissez Ingrédients/Étapes)", name: "body", widget: "markdown", required: false }
 
   - name: "entree"
     label: "Entrées"
@@ -90,15 +127,31 @@ collections:
       - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
       - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
-      - label: "Recette"
-        name: "body"
-        widget: "markdown"
-        default: |
-          ## Ingrédients
-
-          -
-
-          ## Préparation
+      - label: "Ingrédients"
+        name: "ingredients"
+        widget: "list"
+        required: false
+        hint: "Un ingrédient par ligne, ex : « 250 g de farine »"
+        field: { label: "Ingrédient", name: "ingredient", widget: "string" }
+      - label: "Étapes de préparation"
+        name: "steps"
+        widget: "list"
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: "Texte", name: "text", widget: "text" }
+          - label: "Photos de l'étape"
+            name: "images"
+            widget: "list"
+            required: false
+            field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Astuces"
+        name: "tips"
+        widget: "list"
+        required: false
+        field: { label: "Astuce", name: "tip", widget: "string" }
+      - { label: "Accord mets-vin", name: "wine_pairing", widget: "string", required: false }
+      - { label: "Recette (ancien format, laisser vide si vous remplissez Ingrédients/Étapes)", name: "body", widget: "markdown", required: false }
 
   - name: "accompagnement"
     label: "Accompagnements"
@@ -116,15 +169,31 @@ collections:
       - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
       - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
-      - label: "Recette"
-        name: "body"
-        widget: "markdown"
-        default: |
-          ## Ingrédients
-
-          -
-
-          ## Préparation
+      - label: "Ingrédients"
+        name: "ingredients"
+        widget: "list"
+        required: false
+        hint: "Un ingrédient par ligne, ex : « 250 g de farine »"
+        field: { label: "Ingrédient", name: "ingredient", widget: "string" }
+      - label: "Étapes de préparation"
+        name: "steps"
+        widget: "list"
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: "Texte", name: "text", widget: "text" }
+          - label: "Photos de l'étape"
+            name: "images"
+            widget: "list"
+            required: false
+            field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Astuces"
+        name: "tips"
+        widget: "list"
+        required: false
+        field: { label: "Astuce", name: "tip", widget: "string" }
+      - { label: "Accord mets-vin", name: "wine_pairing", widget: "string", required: false }
+      - { label: "Recette (ancien format, laisser vide si vous remplissez Ingrédients/Étapes)", name: "body", widget: "markdown", required: false }
 
   - name: "aperitif"
     label: "Apéritifs"
@@ -142,15 +211,31 @@ collections:
       - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
       - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
-      - label: "Recette"
-        name: "body"
-        widget: "markdown"
-        default: |
-          ## Ingrédients
-
-          -
-
-          ## Préparation
+      - label: "Ingrédients"
+        name: "ingredients"
+        widget: "list"
+        required: false
+        hint: "Un ingrédient par ligne, ex : « 250 g de farine »"
+        field: { label: "Ingrédient", name: "ingredient", widget: "string" }
+      - label: "Étapes de préparation"
+        name: "steps"
+        widget: "list"
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: "Texte", name: "text", widget: "text" }
+          - label: "Photos de l'étape"
+            name: "images"
+            widget: "list"
+            required: false
+            field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Astuces"
+        name: "tips"
+        widget: "list"
+        required: false
+        field: { label: "Astuce", name: "tip", widget: "string" }
+      - { label: "Accord mets-vin", name: "wine_pairing", widget: "string", required: false }
+      - { label: "Recette (ancien format, laisser vide si vous remplissez Ingrédients/Étapes)", name: "body", widget: "markdown", required: false }
 
   - name: "cocktail"
     label: "Cocktails"
@@ -168,15 +253,31 @@ collections:
       - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
       - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
-      - label: "Recette"
-        name: "body"
-        widget: "markdown"
-        default: |
-          ## Ingrédients
-
-          -
-
-          ## Préparation
+      - label: "Ingrédients"
+        name: "ingredients"
+        widget: "list"
+        required: false
+        hint: "Un ingrédient par ligne, ex : « 250 g de farine »"
+        field: { label: "Ingrédient", name: "ingredient", widget: "string" }
+      - label: "Étapes de préparation"
+        name: "steps"
+        widget: "list"
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: "Texte", name: "text", widget: "text" }
+          - label: "Photos de l'étape"
+            name: "images"
+            widget: "list"
+            required: false
+            field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Astuces"
+        name: "tips"
+        widget: "list"
+        required: false
+        field: { label: "Astuce", name: "tip", widget: "string" }
+      - { label: "Accord mets-vin", name: "wine_pairing", widget: "string", required: false }
+      - { label: "Recette (ancien format, laisser vide si vous remplissez Ingrédients/Étapes)", name: "body", widget: "markdown", required: false }
 
   - name: "sauce"
     label: "Sauces"
@@ -194,12 +295,28 @@ collections:
       - { label: "Temps de cuisson", name: "cook_time", widget: "string", required: false, hint: "ex : 45 minutes" }
       - { label: "Nombre de personnes", name: "serves", widget: "string", required: false, hint: "ex : 4 personnes" }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
-      - label: "Recette"
-        name: "body"
-        widget: "markdown"
-        default: |
-          ## Ingrédients
-
-          -
-
-          ## Préparation
+      - label: "Ingrédients"
+        name: "ingredients"
+        widget: "list"
+        required: false
+        hint: "Un ingrédient par ligne, ex : « 250 g de farine »"
+        field: { label: "Ingrédient", name: "ingredient", widget: "string" }
+      - label: "Étapes de préparation"
+        name: "steps"
+        widget: "list"
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: "Texte", name: "text", widget: "text" }
+          - label: "Photos de l'étape"
+            name: "images"
+            widget: "list"
+            required: false
+            field: { label: "Photo", name: "image", widget: "image" }
+      - label: "Astuces"
+        name: "tips"
+        widget: "list"
+        required: false
+        field: { label: "Astuce", name: "tip", widget: "string" }
+      - { label: "Accord mets-vin", name: "wine_pairing", widget: "string", required: false }
+      - { label: "Recette (ancien format, laisser vide si vous remplissez Ingrédients/Étapes)", name: "body", widget: "markdown", required: false }
