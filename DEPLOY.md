@@ -58,3 +58,36 @@ hugo server           # terminal 2
 Note : le workflow éditorial (brouillon/PR) n'est pas simulé par le backend local
 en mode fichier — la publication écrit directement le fichier. Le comportement PR
 ne se voit qu'en production avec le backend GitHub.
+
+## 7. PWA de saisie mobile (`/app/`)
+
+Alternative à Decap pour saisir une recette depuis un téléphone : formulaire en
+cinq écrans (infos, photo, ingrédients, étapes avec photos, publication), photos
+compressées côté client, brouillon conservé sur l'appareil (IndexedDB).
+
+**Aucun build, aucune configuration supplémentaire.** Les fichiers de
+`static/app/` sont servis tels quels par Hugo/Netlify (JavaScript vanilla en
+modules ES). L'authentification réutilise la GitHub OAuth App déjà installée
+dans Netlify (§3) : rien à créer de plus. Seuls les collaborateurs avec le rôle
+**Write** (§1) peuvent publier — la publication est un commit direct sur `main`
+via l'API GitHub (pas de workflow éditorial), qui déclenche le rebuild Netlify.
+
+### Utilisation
+
+1. Ouvrir `https://toutelacuisine.com/app/` sur le téléphone → « Se connecter
+   avec GitHub » (une seule fois, le jeton est mémorisé).
+2. Pour l'installer comme appli : menu du navigateur → « Ajouter à l'écran
+   d'accueil » (iOS Safari) ou invite d'installation (Android Chrome).
+
+### Entretien
+
+- **Modification d'un fichier de l'appli** : incrémenter la version du cache
+  dans `static/app/sw.js` (`const CACHE = "tlc-app-vN"`), sinon les téléphones
+  gardent l'ancien shell en cache.
+- **Tester la publication sans toucher au site** : créer une branche `pwa-test`
+  sur GitHub et pointer `const BRANCH` dessus dans `static/app/github.js`
+  (remettre `"main"` ensuite).
+- **Icônes** : régénérées par `python3 scripts/make_icons.py` (nécessite Pillow).
+- **En local** : `hugo server` sert `/app/` ; le login OAuth fonctionne depuis
+  `localhost` (le `site_id` est codé en dur dans `static/app/auth.js`). Le
+  service worker et l'installation ne se testent qu'en HTTPS sur le site déployé.
